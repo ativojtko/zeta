@@ -26,9 +26,9 @@ from tkinter import messagebox
 
 import zeta # type: ignore
 
-VERSION = "0.9.0-Alpha"
-NAME = "Zeta Tk"
-DATE = "2025-11-13"
+APP_VERSION = "0.9.0-Alpha"
+APP_NAME = "Zeta Tk"
+DATE = "2025-11-22"
 
 class Zeta(tk.Frame):
     def __init__(self, root=None):
@@ -471,9 +471,9 @@ class Zeta(tk.Frame):
 if __name__ == "__main__":
     root = tk.Tk()
     root.geometry('500x450+200+200')
-    root.title("Zeta Tk v. " + VERSION + " Experimental prototype")
+    root.title("Zeta Tk v. " + APP_VERSION + " Experimental prototype")
     #root.iconbitmap('geolcalc.ico')
-    print("Package {} v. {} - {} was setting up successfully.".format(NAME, VERSION, DATE))
+    print("Package {} v. {} - {} was setting up successfully.".format(APP_NAME, APP_VERSION, DATE))
 
     app = Zeta(root)
 
