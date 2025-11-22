@@ -20,18 +20,16 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import math
 
-
 # Default constants for Zeta calculations
-lambda_a = 1.55125e-10     # decay constant of 238U [yr^-1]
-lambda_a_err = 0.00333e-10 # uncertainty of decay constant of 238U [yr^-1]
-g = 0.5                    # geometric factor (0.5 = external detector)
+lambda_a = 1.55125e-10     # Decay constant of 238U [yr^-1]
+lambda_a_err = 0.00333e-10 # Uncertainty of decay constant of 238U [yr^-1]
+g = 0.5                    # Geometric factor (0.5 = external detector method)
 
 
 # GEOCHRONOLOGY STANDARDS
-""" Geochronoly standards: abreviation -> (name, age, uncertainty, Ap, Zrn, Ttn)
+""" Geochronogy standards: abreviation -> (name, age, uncertainty, Ap, Zrn, Ttn)
 Note: True, False for Ap, Zrn, Ttn
 
-APATITE STANDARDS:
 Durango (DUR): 
 McDowell, F.W., McIntosh, W.C., and Farley, K.A., 2005. A precise 
 40Ar-39Ar reference age for the Durango apatite (U-Th)/He and fission 
@@ -98,7 +96,7 @@ standards = {
 }
 
 # ========================================
-# ZETA KALIBRÁCIA A CHYBA σ(ζ)
+# ZETA CALIBRATION AND STANDARD DEVIATION σ(ζ)
 # ========================================
 
 def calc_zeta(std, mineral, lambda_a, lambda_a_err, g, N_D, N_S, N_I, rho_S, rho_I, rho_D):
@@ -123,13 +121,9 @@ def calc_zeta(std, mineral, lambda_a, lambda_a_err, g, N_D, N_S, N_I, rho_S, rho
     Returns:
     zeta_user : float
         Calculated Zeta factor using user equation.
-    zeta_HG : float
-        Calculated Zeta factor using Hurford & Green (1983) equation.
-    t_calc_Ma : float
-        Recalculated age from Zeta factor [Ma].
-    sig_zeta : float
+    sigma_zeta : float
         Uncertainty of the Zeta factor.
-    rel_sig : float
+    rel_sigma_percent : float
         Relative uncertainty of the Zeta factor [%].
     """
 
@@ -137,8 +131,8 @@ def calc_zeta(std, mineral, lambda_a, lambda_a_err, g, N_D, N_S, N_I, rho_S, rho
     print(f"Mineral: {mineral}, type: {type(mineral)}")
     print(f"Standard: {std}, type: {type(std)}")
 
-    t_sm = standards[std][1]      # known age of standard [Ma]
-    sig_T = standards[std][2]     # uncertainty of standard age [Ma]
+    t_sm = standards[std][1]      # Known age of standard [Ma]
+    sig_T = standards[std][2]     # Uncertainty of standard age [Ma]
 
     print(f"Standard age: {t_sm} Ma ± {sig_T} Ma")
     print(f"Lambda_a: {lambda_a} yr^-1 ± {lambda_a_err} yr^-1")
@@ -146,10 +140,10 @@ def calc_zeta(std, mineral, lambda_a, lambda_a_err, g, N_D, N_S, N_I, rho_S, rho
     # --- CONVERSION TO YEARS ---
     t_sm_yr = t_sm * 1e6
 
-    # Equation
+    # --- EQUATION ---
     zeta_user = (math.exp(lambda_a * t_sm_yr) - 1) / (lambda_a * (rho_S / rho_I) * g * rho_D)
 
-    # Uncertainty of ζ
+    # UNCERTAINTY OF ζ
     sig_zeta = zeta_user * math.sqrt(
         (1 / N_S) +
         (1 / N_I) +
@@ -176,15 +170,15 @@ if __name__ == "__main__":
     sig_lambda_a = 0.00333e-10 # Error in the decay constant of 238U [yr^-1]
 
     # Durango (McDowell et al. 2005)
-    t_sm = 31.44              # známy vek štandardu Durango [Ma]
-    sig_T = 0.018             # chyba veku štandardu Durango [Ma]
-    rho_S = 210321.91         # spontánne stopy [cm^-2]
-    rho_I = 536061.05         # indukované stopy [cm^-2]
-    rho_D = 0.66973           # dosimeter (ak sa používa)
-    g = 0.5                   # geometrický faktor (0.5 = externý detektor)
-    N_S = 769                 # počet spontánnych stôp
-    N_I = 1960                # počet indukovaných stôp
-    N_D = 5881                # počet stôp na dosimetri U-sklíčka
+    t_sm = 31.44              # Known age of Durango standard [Ma]
+    sig_T = 0.018             # Durango standard age error [Ma]
+    rho_S = 210321.91         # Density od spontaneous fission tracks [cm^-2]
+    rho_I = 536061.05         # Density of induced fission tracks [cm^-2]
+    rho_D = 0.66973           # Density of fission tracks on the U-glass dosimeter (if used)
+    g = 0.5                   # Geometric factor (0.5 = External detector method)
+    N_S = 769                 # Number of spontaneous fission tracks
+    N_I = 1960                # Number of induced fission tracks
+    N_D = 5881                # Number of fission tracks on the U-glass dosimeter
 
     # zeta_user, zeta_HG, t_calc_Ma, sig_zeta, rel_sig = calc_zeta(std, mineral, lambda_a, lambda_a_err, g, N_D, N_S, N_I, rho_S, rho_I, rho_D 
     # )
