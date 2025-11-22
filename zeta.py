@@ -143,20 +143,13 @@ def calc_zeta(std, mineral, lambda_a, lambda_a_err, g, N_D, N_S, N_I, rho_S, rho
     print(f"Standard age: {t_sm} Ma ± {sig_T} Ma")
     print(f"Lambda_a: {lambda_a} yr^-1 ± {lambda_a_err} yr^-1")
 
-    # # --- PREPOČET NA ROKY ---
+    # --- CONVERSION TO YEARS ---
     t_sm_yr = t_sm * 1e6
 
-    # 1) User equation:
+    # Equation
     zeta_user = (math.exp(lambda_a * t_sm_yr) - 1) / (lambda_a * (rho_S / rho_I) * g * rho_D)
 
-    # # 2) Hurford & Green (1983)
-    # zeta_HG = (lambda_a * g * rho_S) / (rho_I * (math.exp(lambda_a * t_sm_yr) - 1))
-
-    # # 3) Recalculate age from ζ_HG
-    # t_calc_yr = (1 / lambda_a) * math.log(1 + (lambda_a * g * rho_S) / (zeta_HG * rho_I))
-    # t_calc_Ma = t_calc_yr / 1e6
-
-    # 4) Uncertainty of ζ
+    # Uncertainty of ζ
     sig_zeta = zeta_user * math.sqrt(
         (1 / N_S) +
         (1 / N_I) +
@@ -175,24 +168,16 @@ def calc_zeta(std, mineral, lambda_a, lambda_a_err, g, N_D, N_S, N_I, rho_S, rho
 
 
 if __name__ == "__main__":
-    # # Example usage
-    # N_S = 391  # Number of spontaneous tracks
-    # N_I = 1027  # Number of induced tracks
-    # N_D = 5881  # Number of dosimeter tracks
-    # rho_S = 0.1938e6  # Spontaneous track density [cm^-2]
-    # rho_I = 0.5090e6  # Induced track density [cm^-2]
-    # rho_D = 0.669727e6  # Dosimeter track density [cm^-2]
     std = "DUR"    # Standard
     mineral = "Ap" # Mineral
 
-
-    # --- ZADANIE PARAMETROV ---
-    lambda_a = 1.55125e-10     # rozpadová konštanta 238U [yr^-1]
-    sig_lambda_a = 0.00333e-10 # chyba veku rozpadovej konštanty 238U [yr^-1]
+    # --- SETTING PARAMETERS ---
+    lambda_a = 1.55125e-10     # Decay constant of 238U [yr^-1]
+    sig_lambda_a = 0.00333e-10 # Error in the decay constant of 238U [yr^-1]
 
     # Durango (McDowell et al. 2005)
-    t_sm = 31.44              # známy vek štandardu [Ma]
-    sig_T = 0.018             # chyba veku štandardu [Ma]
+    t_sm = 31.44              # známy vek štandardu Durango [Ma]
+    sig_T = 0.018             # chyba veku štandardu Durango [Ma]
     rho_S = 210321.91         # spontánne stopy [cm^-2]
     rho_I = 536061.05         # indukované stopy [cm^-2]
     rho_D = 0.66973           # dosimeter (ak sa používa)
