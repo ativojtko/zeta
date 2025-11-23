@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-"""Function for calculation of Zeta factor for Fission track analysis.
+"""The Calculation of the Zeta Factor for Fission Track Analysis
 
 Copyright (C) 2025 Rasto Vojtko
 
@@ -20,13 +20,15 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import math
 
-# Default constants for Zeta calculations
+APP_VERSION = '1.0.0'
+
+# --- DEFAULT CONSTANTS FOR ZETA CALCULATIONS ---
 lambda_a = 1.55125e-10     # Decay constant of 238U [yr^-1]
 lambda_a_err = 0.00333e-10 # Uncertainty of decay constant of 238U [yr^-1]
 g = 0.5                    # Geometric factor (0.5 = external detector method)
 
 
-# GEOCHRONOLOGY STANDARDS
+# --- GEOCHRONOLOGY STANDARDS ---
 """ Geochronogy standards: abreviation -> (name, age, uncertainty, Ap, Zrn, Ttn)
 Note: True, False for Ap, Zrn, Ttn
 
@@ -79,6 +81,7 @@ of zircon standards. Chemical Geology, 205, 15-140
 
 Note: Check TEM2 for other minerals!
 """
+
 minerals = {
     "Ap": "Apatite",
     "Zrn": "Zircon",
@@ -95,9 +98,9 @@ standards = {
     "TR": ["Tardree Rhyolite", 61.23, 0.11, False, True, False],
 }
 
-# ========================================
+# ============================================
 # ZETA CALIBRATION AND STANDARD DEVIATION σ(ζ)
-# ========================================
+# ============================================
 
 def calc_zeta(std, mineral, lambda_a, lambda_a_err, g, N_D, N_S, N_I, rho_S, rho_I, rho_D):
     """Calculate Zeta factor and its uncertainty.
@@ -128,14 +131,14 @@ def calc_zeta(std, mineral, lambda_a, lambda_a_err, g, N_D, N_S, N_I, rho_S, rho
     """
 
     # --- EXTRACT STANDARD PARAMETERS ---
-    print(f"Mineral: {mineral}, type: {type(mineral)}")
-    print(f"Standard: {std}, type: {type(std)}")
+    #print(f"Mineral: {mineral}, type: {type(mineral)}")
+    #print(f"Standard: {std}, type: {type(std)}")
 
     t_sm = standards[std][1]      # Known age of standard [Ma]
     sig_T = standards[std][2]     # Uncertainty of standard age [Ma]
 
-    print(f"Standard age: {t_sm} Ma ± {sig_T} Ma")
-    print(f"Lambda_a: {lambda_a} yr^-1 ± {lambda_a_err} yr^-1")
+    #print(f"Standard age: {t_sm} Ma ± {sig_T} Ma")
+    #print(f"Lambda_a: {lambda_a} yr^-1 ± {lambda_a_err} yr^-1")
 
     # --- CONVERSION TO YEARS ---
     t_sm_yr = t_sm * 1e6
@@ -162,16 +165,22 @@ def calc_zeta(std, mineral, lambda_a, lambda_a_err, g, N_D, N_S, N_I, rho_S, rho
 
 
 if __name__ == "__main__":
-    std = "DUR"    # Standard
-    mineral = "Ap" # Mineral
+    # ===================================================
+    # ZETA CALIBRATION AND STANDARD DEVIATION σ(ζ) - TEST
+    # ===================================================
 
     # --- SETTING PARAMETERS ---
+    # --- Decay onstant and error
     lambda_a = 1.55125e-10     # Decay constant of 238U [yr^-1]
     sig_lambda_a = 0.00333e-10 # Error in the decay constant of 238U [yr^-1]
 
     # Durango (McDowell et al. 2005)
+    std = "DUR"    # Standard
+    mineral = "Ap" # Mineral
     t_sm = 31.44              # Known age of Durango standard [Ma]
     sig_T = 0.018             # Durango standard age error [Ma]
+
+    # Setting the relevant parameters for fission track counting
     rho_S = 210321.91         # Density od spontaneous fission tracks [cm^-2]
     rho_I = 536061.05         # Density of induced fission tracks [cm^-2]
     rho_D = 0.66973           # Density of fission tracks on the U-glass dosimeter (if used)
@@ -180,15 +189,15 @@ if __name__ == "__main__":
     N_I = 1960                # Number of induced fission tracks
     N_D = 5881                # Number of fission tracks on the U-glass dosimeter
 
-    # zeta_user, zeta_HG, t_calc_Ma, sig_zeta, rel_sig = calc_zeta(std, mineral, lambda_a, lambda_a_err, g, N_D, N_S, N_I, rho_S, rho_I, rho_D 
-    # )
+    # Calling the calc_zeta function
+    result = calc_zeta(std, mineral, lambda_a, lambda_a_err, g, N_D, N_S, N_I, rho_S, rho_I, rho_D)
 
-    zeta_user, zeta_HG, t_calc_Ma, sig_zeta, rel_sig = calc_zeta(
-        std, mineral, lambda_a, lambda_a_err, g, N_D, N_S, N_I, rho_S, rho_I, rho_D 
-    )
+    #print(result)
+    print("-" * 80)
+    print(f"Standard used: {standards[std][0]}, {standards[std][1]} ± {standards[std][2]} Ma")
+    print(f"Zeta (user equation): {result['zeta_user']:.2f} Ma.cm\u00B2")
+    print(f"Uncertainty of Zeta: {result['sigma_zeta']:.2f} Ma.cm\u00B2") 
+    print(f"Relative uncertainty: {result['rel_sigma_percent']:.2f} %")
+    print("-" * 80)
 
-    print(f"Zeta (user equation): {zeta_user:.4e}")
-    print(f"Zeta (Hurford & Green): {zeta_HG:.4e}")
-    print(f"Recalculated age: {t_calc_Ma:.2f} Ma")
-    print(f"Uncertainty of Zeta: {sig_zeta:.4e}")
-    print(f"Relative uncertainty: {rel_sig:.2f} %")
+# End of Script (c) Rasto Vojtko
