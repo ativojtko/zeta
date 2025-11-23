@@ -56,6 +56,20 @@ def run_cli():
 
     print(args)
 
+    # ------------------------------------------------------------
+    # VALIDATION
+    # ------------------------------------------------------------
+
+    # Validate standard
+    if args.std not in standards:
+        print(f"ERROR: Unknown standard {args.std}. Allowed: {', '.join(standards.keys())}")
+        sys.exit(1)
+
+    # Validate mineral
+    if args.mineral not in minerals:
+        print(f"ERROR: Unknown mineral {args.mineral}. Allowed: {', '.join(minerals.keys())}")
+        sys.exit(1)
+
 
 if __name__ == "__main__":
     run_cli()
