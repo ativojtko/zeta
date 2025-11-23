@@ -71,5 +71,22 @@ def run_cli():
         sys.exit(1)
 
 
+    # Perform calculation
+    result = calc_zeta(
+        std=args.std,
+        mineral=args.mineral,
+        lambda_a=args.lambdaA,
+        lambda_a_err=args.lambdaA_err,
+        g=args.g,
+        N_D=args.Nd,
+        N_S=args.Ns,
+        N_I=args.Ni,
+        rho_S=args.rhoS,
+        rho_I=args.rhoI,
+        rho_D=args.rhoD
+    )
+
+    print(result)
+
 if __name__ == "__main__":
     run_cli()
