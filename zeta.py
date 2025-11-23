@@ -165,6 +165,8 @@ def calc_zeta(std, mineral, lambda_a, lambda_a_err, g, N_D, N_S, N_I, rho_S, rho
 
 
 if __name__ == "__main__":
+    print("This is a module and this part of code is only for testing.")
+    print("Please use zeta_cli.py or zeta_prg.py to ruch this program.")
     # ===================================================
     # ZETA CALIBRATION AND STANDARD DEVIATION σ(ζ) - TEST
     # ===================================================
@@ -183,7 +185,7 @@ if __name__ == "__main__":
     # Setting the relevant parameters for fission track counting
     rho_S = 210321.91         # Density od spontaneous fission tracks [cm^-2]
     rho_I = 536061.05         # Density of induced fission tracks [cm^-2]
-    rho_D = 0.66973           # Density of fission tracks on the U-glass dosimeter (if used)
+    rho_D = 0.66973           # Density of fission tracks on U-glass dosimeter (if used)
     g = 0.5                   # Geometric factor (0.5 = External detector method)
     N_S = 769                 # Number of spontaneous fission tracks
     N_I = 1960                # Number of induced fission tracks
