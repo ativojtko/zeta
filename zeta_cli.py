@@ -86,7 +86,16 @@ def run_cli():
         rho_D=args.rhoD
     )
 
-    print(result)
+    # Output of zeta, sigma zeta, dns relative sigma zeta
+    print("\n" + "=" * 60)
+    print(f" Standard: {args.std} - {standards[args.std][0]}")
+    print(f" Mineral:  {args.mineral} - {minerals[args.mineral]}")
+    print("-" * 60)
+    print(f" Zeta (ζ):           {result['zeta_user']:.2f} Ma/cm²")
+    print(f" σ(ζ):               {result['sigma_zeta']:.2f} Ma/cm²")
+    print(f" Relative σ(ζ):      {result['rel_sigma_percent']:.2f} %")
+    print("=" * 60 + "\n")
+
 
 if __name__ == "__main__":
     run_cli()
