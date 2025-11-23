@@ -1,3 +1,4 @@
-Toto je Experimental prototype programu Zeta s Tk GUI. Prelease Alpha.
+This is an experimental prototype of the Zeta program with CLI.
 
-(c) 
+Rasto Vojtko
+ 
