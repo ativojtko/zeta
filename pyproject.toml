@@ -1,0 +1,26 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "zeta-factor"
+version = "1.1.0"
+description = "Zeta factor calculation tool for fission-track dating"
+readme = "README.md"
+requires-python = ">=3.7"
+license = {text = "MIT"}
+authors = [
+    {name = "Rastislav Vojtko", email = "rastislav.vojtko@gmail.com"}
+]
+# Sem napíš externé knižnice, ak nejaké používaš v core.py (napr. "numpy")
+# Ak používaš len štandardné knižnice (math, sys, argparse), nechaj toto prázdne.
+dependencies = []
+
+[project.scripts]
+# TOTO JE NAJDÔLEŽITEJŠIA ČASŤ
+# "nazov-prikazu" = "cesta.k.funkcii:funkcia"
+zeta = "zeta.cli.cli:run_cli"
+
+[tool.setuptools.packages.find]
+where = ["."]  # Hľadá balíčky v aktuálnom adresári
+include = ["zeta*"]
