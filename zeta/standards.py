@@ -1,8 +1,8 @@
 
 # --- DEFAULT CONSTANTS FOR ZETA CALCULATIONS ---
-lambda_a = 1.55125e-10     # Decay constant of 238U [yr^-1]
-lambda_a_err = 0.00333e-10 # Uncertainty of decay constant of 238U [yr^-1]
-g = 0.5                    # Geometric factor (0.5 = external detector method)
+LAMBDA_A = 1.55125e-10     # Decay constant of 238U [yr^-1]
+LAMBDA_A_ERR = 0.00333e-10 # Uncertainty of decay constant of 238U [yr^-1]
+G = 0.5                    # Geometric factor (0.5 = external detector method)
 
 
 # --- GEOCHRONOLOGY STANDARDS ---
@@ -65,12 +65,13 @@ minerals = {
     "Ttn": "Titanite",
 }
 
+# Tuple structure: (Name, Age [Ma], Uncertainty [Ma], Has Ap?, Has Zrn?, Has Ttn?)
 standards = {
-    "FCT": ["Fish Canyon Tuff", 28.201, 0.012, True, True, True],
-    "FC1": ["Duluth Complex", 1099.0, 0.6, True, True, False],
-    "DUR": ["Durango", 31.44, 0.018, True, False, False],
-    "MD": ["Mount Dromedary", 99.12, 0.14, True, True, False],
-    "MM": ["Mount McClure", 523.51, 1.47, True, True, True],
-    "TEM2": ["TEMORA2", 416.78, 0.33, False, True, False],
-    "TR": ["Tardree Rhyolite", 61.23, 0.11, False, True, False],
+    "FCT": ("Fish Canyon Tuff", 28.201, 0.012, True, True, True),
+    "FC1": ("Duluth Complex", 1099.0, 0.6, True, True, False),
+    "DUR": ("Durango", 31.44, 0.018, True, False, False),
+    "MD": ("Mount Dromedary", 99.12, 0.14, True, True, False),
+    "MM": ("Mount McClure", 523.51, 1.47, True, True, True),
+    "TEM2": ("TEMORA2", 416.78, 0.33, False, True, False),
+    "TR": ("Tardree Rhyolite", 61.23, 0.11, False, True, False),
 }
