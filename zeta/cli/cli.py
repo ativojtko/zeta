@@ -2,7 +2,9 @@
 
 import sys
 import argparse
-from zeta import calc_zeta, standards, minerals, lambda_a, lambda_a_err, g, APP_VERSION
+from zeta.core import calc_zeta
+from zeta.standards import standards, minerals, LAMBDA_A, LAMBDA_A_ERR, G
+from zeta.version import APP_VERSION
 
 def run_cli():
     #------------------------------------------------------------
@@ -48,9 +50,9 @@ def run_cli():
     parser.add_argument("--rhoD", type=float, required=True, help="Dosimeter track density [cm^-2]")
 
     # Optional override constants
-    parser.add_argument("--lambdaA", type=float, default=lambda_a)
-    parser.add_argument("--lambdaA_err", type=float, default=lambda_a_err)
-    parser.add_argument("--g", type=float, default=g)
+    parser.add_argument("--lambdaA", type=float, default=LAMBDA_A)
+    parser.add_argument("--lambdaA_err", type=float, default=LAMBDA_A_ERR)
+    parser.add_argument("--g", type=float, default=G)
 
     args = parser.parse_args(remaining_argv)
 
